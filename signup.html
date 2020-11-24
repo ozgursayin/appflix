@@ -4,38 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form UI</title>
     <link href="./css/login.css" rel='stylesheet' />
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <title>Sign Up</title>
 </head>
 
 <body>
-    <div class="content">
-        <div class="text">Sign Up</div>
-        <form action="#">
-            <div class="field">
-                <span class="fas fa-user"></span>
-                <input type="text" required>
-                <label>Email or Phone</label>
+    <main class="main">
+        <div class="wrapper">
+            <div class="card">
+                <div class="title">
+                    <h1 class="title title-large">Sign Up</h1>
+                    <p class="title title-subs">Existing user? <span><a href="#" class="linktext">Login</a></span>
+                    </p>
+                </div>
+                <form class="form">
+                    <div class="form-group">
+                        <input type="email" name="email" id="email" class="input-field" placeholder="Email Address">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="username" id="username" class="input-field" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" id="password" class="input-field" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" id="password" class="input-field"
+                            placeholder="Confirm Password">
+                    </div>
+                    <div class="form-group">
+                        <a href="./index.html" class="linktext">Forgot Password</a>
+                        <input type="button" name="submit" class="input-submit" value="Sign Up">
+                    </div>
+                </form>
+                <div class="line">
+                    <span class="line-bar"></span>
+                    <span class="line-text">Or</span>
+                    <span class="line-bar"></span>
+                </div>
+                <div class="method">
+                    <div class="method-item">
+                        <a href="#" class="btn-action">
+                            <i class="icons icons-google fab fa-google"></i>
+                            <span>Sign up with Google</span>
+                        </a>
+                    </div>
+                </div>
             </div>
+        </div>
+    </main>
 
-            <div class="field">
-                <span class="fas fa-lock"></span>
-                <input type="password">
-                <label>Password</label>
-            </div>
-            <br>
-            <div class="field">
-                <span class="fas fa-lock"></span>
-                <input type="password">
-                <label>Password Confirm</label>
-            </div>
-            <!-- <div class="forgot-pass"><a href="#">Forgot Password?</a></div> -->
-            <button>Sign Up</button>
-
-        </form>
-    </div>
 </body>
 
 </html>
