@@ -1,0 +1,309 @@
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background: #d4d4d4;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.main-title {
+    color: #2d2d2d;
+    text-align: center;
+    text-transform: capitalize;
+    padding: 0.7em 0;
+}
+
+.container {
+    padding: 1em 0;
+    float: left;
+    width: 50%;
+}
+
+@media screen and (max-width: 640px) {
+    .container {
+        display: block;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .container {
+        width: 33.33333%;
+    }
+}
+
+.container .title {
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.content {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.content .content-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    height: 99%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    -webkit-transition: all 0.4s ease-in-out 0s;
+    -moz-transition: all 0.4s ease-in-out 0s;
+    transition: all 0.4s ease-in-out 0s;
+}
+
+.content:hover .content-overlay {
+    opacity: 1;
+}
+
+.content-image {
+    width: 100%;
+}
+
+.content-details {
+    position: absolute;
+    text-align: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    max-height: 2rem;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.content:hover .content-details {
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+}
+
+.content-details h3 {
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5em;
+    text-transform: uppercase;
+}
+
+.content-details p {
+    color: #fff;
+    font-size: 0.8em;
+}
+
+.fadeIn-bottom {
+    top: 80%;
+}
+
+.fadeIn-top {
+    top: 20%;
+}
+
+.fadeIn-left {
+    left: 20%;
+}
+
+.fadeIn-right {
+    left: 80%;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid hsla(0, 0%, 90%, .1);
+    margin: 2rem auto
+}
+
+.tabs a {
+    width: 20rem;
+    height: 5rem;
+    line-height: 5rem;
+    text-align: center;
+    text-decoration: none;
+    color: rgba(56, 49, 49, 0.8)
+}
+
+.tabs a.active {
+    background-color: hsla(0, 0%, 100%, .1);
+    border-bottom: 4px solid #4388b0;
+    color: rgba(56, 49, 49, 0.8);
+    cursor: normal
+}
+
+.search-bar {
+    text-align: center;
+    margin: 1rem auto
+}
+
+.search-bar input {
+    width: 68%;
+    color: #333;
+    margin: 0
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0
+}
+
+button,
+html input[type=button],
+input[type=reset],
+input[type=submit] {
+    -webkit-appearance: button;
+    cursor: pointer
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+textarea {
+    overflow: auto
+}
+
+input[type=email],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=text],
+input[type=url],
+select,
+textarea {
+    height: 38px;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    box-shadow: none;
+    box-sizing: border-box
+}
+
+input[type=email],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=text],
+input[type=url],
+textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+}
+
+a {
+    color: #1eaedb;
+}
+
+a:hover {
+    color: #0fa0ce
+}
+
+.like-button {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    border-radius: 2rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #fff;
+    top: -6rem;
+    cursor: pointer;
+    background: #ff9f1c linear-gradient(#ff9f1c, rgba(0, 0, 0, .3));
+    transition-duration: .1s;
+    transition-property: transform
+}
+
+
+.add-button {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    border-radius: 2rem;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #fff;
+    top: -3.5rem;
+    cursor: pointer;
+    background: #ff9f1c linear-gradient(#ff9f1c, rgba(0, 0, 0, .3));
+    transition-duration: .1s;
+    transition-property: transform
+}
+
+.add-button:hover {
+    transform: scale(1.1)
+}
+
+.like-button:hover {
+    transform: scale(1.1)
+}
+
+/* Tooltip container */
+.tooltip {
+    /* position: relative; */
+    /* display: inline-block; */
+    border-bottom: 1px dotted rgb(52, 52, 52);
+    /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 6rem;
+    background-color: rgb(52, 52, 52);
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size: .8rem;
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    margin-left: .5rem;
+}
