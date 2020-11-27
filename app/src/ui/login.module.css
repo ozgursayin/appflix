@@ -1,4 +1,4 @@
-/* *,
+*,
 *::before,
 *::after {
     padding: 0;
@@ -73,7 +73,7 @@ button {
     background: none;
 }
 
-.icons-google {
+.iconsGoogle {
     color: #d32f2f;
 }
 
@@ -85,7 +85,7 @@ button {
     color: #252a32;
 }
 
-.linktext {
+.linkText {
     font-family: inherit;
     font-size: 0.95rem;
     line-height: inherit;
@@ -93,7 +93,7 @@ button {
     text-rendering: optimizeLegibility;
 }
 
-.linktext:hover {
+.linkText:hover {
     text-decoration: underline;
 }
 
@@ -103,13 +103,13 @@ button {
     text-rendering: optimizeLegibility;
 }
 
-.title-large {
+.titleLarge {
     font-size: 2rem;
     font-weight: 600;
     color: #252a32;
 }
 
-.title-subs {
+.titleSubs {
     font-size: 0.95rem;
     font-weight: 400;
     line-height: inherit;
@@ -121,7 +121,7 @@ button {
     margin: 2rem 0;
 }
 
-.main .wrapper .form-group {
+.main .wrapper .formGroup {
     display: -webkit-box;
     display: flex;
     -webkit-box-orient: horizontal;
@@ -134,7 +134,7 @@ button {
     margin-bottom: 1rem;
 }
 
-.main .wrapper .form-group .input-field {
+.main .wrapper .formGroup .inputField {
     font-family: inherit;
     font-size: 0.95rem;
     font-weight: 400;
@@ -149,7 +149,7 @@ button {
     background: #f1f5f8;
 }
 
-.main .wrapper .form-group .input-submit {
+.main .wrapper .formGroup .inputSubmit {
     font-family: inherit;
     font-size: 0.95rem;
     font-weight: 500;
@@ -177,7 +177,7 @@ button {
     margin-bottom: 1rem;
 }
 
-.main .wrapper .line-bar {
+.main .wrapper .lineBar {
     -webkit-box-flex: 1;
     flex: auto;
     flex-basis: auto;
@@ -187,17 +187,17 @@ button {
     background: #bed1df;
 }
 
-.main .wrapper .line-text {
+.main .wrapper .lineText {
     font-weight: 500;
     color: #252a32;
     padding: 0 1rem;
 }
 
-.main .wrapper .method-item {
+.main .wrapper .methodItem {
     margin-bottom: 0.5rem;
 }
 
-.main .wrapper .method-item .btn-action {
+.main .wrapper .methodItem .buttonAction {
     display: -webkit-box;
     display: flex;
     -webkit-box-orient: horizontal;
@@ -223,6 +223,6 @@ button {
     transition: all 0.35s ease;
 }
 
-.main .wrapper .method-item .btn-action:hover {
+.main .wrapper .methodItem .buttonAction:hover {
     background: #cfdde7;
-} */
+}

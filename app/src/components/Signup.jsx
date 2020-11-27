@@ -1,19 +1,21 @@
 import React from "react";
 import styles from "../ui/login.module.css";
 
-const Login = () => {
+const Signup = () => {
   return (
     <div>
       <main className={styles.main}>
         <div className={styles.wrapper}>
           <div className={styles.card}>
             <div className={styles.title}>
-              <h1 className={`${styles.title} ${styles.titleLarge}`}>Login</h1>
+              <h1 className={`${styles.title} ${styles.titleLarge}`}>
+                Sign Up
+              </h1>
               <p className={`${styles.title} ${styles.titleSubs}`}>
-                New user? <span> </span>
+                Existing user?
                 <span>
                   <a href="/" className={styles.linkText}>
-                    Create an account
+                    <span> </span> Sign In
                   </a>
                 </span>
               </p>
@@ -30,6 +32,15 @@ const Login = () => {
               </div>
               <div className={styles.formGroup}>
                 <input
+                  type="username"
+                  name="username"
+                  id="emausernameil"
+                  className={styles.inputField}
+                  placeholder="Username"
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <input
                   type="password"
                   name="password"
                   id="password"
@@ -38,14 +49,24 @@ const Login = () => {
                 />
               </div>
               <div className={styles.formGroup}>
+                <input
+                  type="password"
+                  name="password"
+                  id="confirm-password"
+                  className={styles.inputField}
+                  placeholder="Confirm Password"
+                />
+              </div>
+              <div className={styles.formGroup}>
                 <a href="./" className={styles.linkText}>
-                  Forgot Password
+                  Continue as Guest
                 </a>
+                <span> </span>
                 <input
                   type="button"
                   name="submit"
                   className={styles.inputSubmit}
-                  value="Login"
+                  value="Sign up"
                 />
               </div>
             </form>
@@ -60,7 +81,7 @@ const Login = () => {
                   <i
                     className={`${styles.icons} ${styles.iconsGoogle} ${styles.fab}`}
                   ></i>
-                  <span>Login with Google</span>
+                  <span>Sign up with Google</span>
                 </a>
               </div>
             </div>
@@ -71,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

@@ -1,11 +1,31 @@
 import React from "react";
-import "../ui/main.css";
+import styles from "../ui/main.module.css";
 
-const SearchBox = () => {
+const SearchBox = (props) => {
+  const { page } = props;
+
+  const searchBoxPlaceholderSetter = (page) => {
+    switch (page) {
+      case "search":
+        return "Search movies...";
+
+      case "watchlist":
+        return "Search movies on watchlist...";
+
+      case "favorites": {
+        return "Search favorite movies...";
+      }
+      default:
+        return null;
+    }
+  };
+
+  const placeholder = searchBoxPlaceholderSetter(page);
+
   return (
     <div>
-      <div className="search-bar">
-        <input type="search" placeholder="Search movies ..." />
+      <div className={styles.searchBox}>
+        <input type="search" placeholder={placeholder} />
       </div>
     </div>
   );
