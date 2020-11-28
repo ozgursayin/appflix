@@ -3,18 +3,22 @@ import MovieCard from "./MovieCard";
 
 const MovieSearch = (props) => {
   const { movies } = props;
-  return (
+  console.log("MovieSearch", movies.total_results);
+  return movies.total_results > 0 ? (
     <div>
-      {movies.map((movie) => (
-        <MovieCard
-          title={movie.meta.original_title}
-          description={movie.meta.overview}
-          poster_path={movie.meta.poster_path}
-          key={movie.id}
-        />
-      ))}
+      {movies.results.map(
+        (movie) =>
+          movie.poster_path && (
+            <MovieCard
+              title={movie.original_title}
+              description={movie.overview}
+              poster_path={movie.poster_path}
+              key={movie.id}
+            />
+          )
+      )}
     </div>
-  );
+  ) : null;
 };
 
 export default MovieSearch;
