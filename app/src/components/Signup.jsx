@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "../ui/login.module.css";
 
 const Signup = () => {
@@ -14,9 +15,13 @@ const Signup = () => {
               <p className={`${styles.title} ${styles.titleSubs}`}>
                 Existing user?
                 <span>
-                  <a href="/" className={styles.linkText}>
-                    <span> </span> Sign In
-                  </a>
+                  <Link
+                    className={styles.linkText}
+                    to="/login"
+                    //onClick={this.handleClick()}
+                  >
+                    <span> </span> Log in
+                  </Link>
                 </span>
               </p>
             </div>
@@ -58,16 +63,22 @@ const Signup = () => {
                 />
               </div>
               <div className={styles.formGroup}>
-                <a href="./" className={styles.linkText}>
-                  Continue as Guest
-                </a>
+                <Link
+                  className={styles.linkText}
+                  to="/"
+                  //onClick={this.handleClick()}
+                >
+                  <span> </span> Continue as Guest
+                </Link>
                 <span> </span>
-                <input
-                  type="button"
-                  name="submit"
+                <Link
                   className={styles.inputSubmit}
-                  value="Sign up"
-                />
+                  role="button"
+                  to="/"
+                  //onClick={this.handleClick()}
+                >
+                  Sign up
+                </Link>
               </div>
             </form>
             <div className={styles.line}>
@@ -77,12 +88,16 @@ const Signup = () => {
             </div>
             <div className={styles.method}>
               <div className={styles.methodItem}>
-                <a href="google.com" className={styles.buttonAction}>
+                <Link
+                  className={styles.buttonAction}
+                  to="/"
+                  //onClick={this.handleClick()}
+                >
                   <i
                     className={`${styles.icons} ${styles.iconsGoogle} ${styles.fab}`}
                   ></i>
                   <span>Sign up with Google</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

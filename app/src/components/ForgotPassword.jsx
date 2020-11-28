@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "../ui/login.module.css";
 
 const ForgotPassword = () => {
@@ -24,15 +25,28 @@ const ForgotPassword = () => {
               </div>
 
               <div className={styles.formGroup}>
-                <a href="./index.html" className={styles.linkText}>
+                <Link
+                  className={styles.linkText}
+                  role="button"
+                  to="/login"
+                  //onClick={this.handleClick()}
+                >
                   Back to Login
-                </a>
-                <input
+                </Link>
+                {/* <input
                   type="button"
                   name="submit"
                   className={styles.inputSubmit}
                   value="Reset Password"
-                />
+                /> */}
+                <Link
+                  className={styles.inputSubmit}
+                  role="button"
+                  to="/"
+                  //onClick={this.handleClick()}
+                >
+                  Reset Password
+                </Link>
               </div>
             </form>
           </div>

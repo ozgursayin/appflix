@@ -1,7 +1,5 @@
 import React from "react";
 import MovieCard from "./MovieCard";
-import SearchBox from "./SearchBox";
-import Navbar from "./Navbar";
 
 const WatchList = (props) => {
   const { movies } = props;
