@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SearchBox from "../components/SearchBox";
 import Navbar from "../components/Navbar";
 import MovieSearch from "../components/MovieSearch";
@@ -9,15 +9,13 @@ import movies from "../movies";
 const MovieList = (props) => {
   const { page } = props;
   const [result, setResult] = useState([]);
-
+  const [searchedMovie, setSearchedMovie] = useState(
+    localStorage.key(0) || ["back-to"]
+  );
+  const previousQuery = useRef("");
   const BASE_URL = "https://api.themoviedb.org/3/search/multi";
   const api_key = `?api_key=${process.env.REACT_APP_TMDB_API_KEY}`;
-  const searchedMovie = "back-to";
   const query = `&query=${searchedMovie}`;
-
-  useEffect(() => {
-    fetchMovies();
-  }, []);
 
   const fetchMovies = async () => {
     const apiCallURL = `${BASE_URL}${api_key}${query}`;
@@ -25,7 +23,32 @@ const MovieList = (props) => {
     const resultMovies = await result.json();
     setResult(resultMovies);
   };
-  console.log(result);
+
+  // const fetchPopularMovies = async () => {
+  //   const apiCallURL = `${BASE_URL}${api_key}${query}`;
+  //   const popularMoviesCall = ` https://api.themoviedb.org/3/movie/popular${api_key}&language=en-US&page=1`;
+  //   const result = await fetch(popularMoviesCall);
+  //   const resultMovies = await result.json();
+  //   setResult(resultMovies);
+  //   console.log(resultMovies)
+  // };
+
+  function usePersistedState(key, defaultValue) {
+    const [state, setState] = React.useState(
+      () => localStorage.getItem(key) || defaultValue
+    );
+    useEffect(() => {
+      if (localStorage.length === 0) localStorage.setItem(key, state);
+    }, [key, state]);
+
+    return [state, setState];
+  }
+  usePersistedState(previousQuery.current, previousQuery.current);
+  console.log(localStorage.key(0));
+
+  useEffect(() => {
+    fetchMovies();
+  }, [searchedMovie]);
 
   const pageCases = (page) => {
     switch (page) {
@@ -43,10 +66,18 @@ const MovieList = (props) => {
     }
   };
 
+  const movieNameSetter = (e) => {
+    previousQuery.current = e.target.value;
+    e.target.value.length > 0
+      ? setSearchedMovie(e.target.value)
+      : setSearchedMovie(null);
+    localStorage.clear();
+  };
+
   return (
     <div>
       <Navbar />
-      <SearchBox page={page} />
+      <SearchBox page={page} movieNameSetter={(e) => movieNameSetter(e)} />
       {pageCases(page)}
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../ui/main.module.css";
 
 const SearchBox = (props) => {
-  const { page } = props;
+  const { page, movieNameSetter } = props;
 
   const searchBoxPlaceholderSetter = (page) => {
     switch (page) {
@@ -25,7 +25,11 @@ const SearchBox = (props) => {
   return (
     <div>
       <div className={styles.searchBox}>
-        <input type="search" placeholder={placeholder} />
+        <input
+          type="search"
+          placeholder={placeholder}
+          onChange={(e) => movieNameSetter(e)}
+        />
       </div>
     </div>
   );

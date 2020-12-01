@@ -7,6 +7,7 @@ import MovieDetails from "./components/MovieDetails";
 import MovieList from "./layouts/MovieList";
 
 function App() {
+  localStorage.clear();
   return (
     <div>
       <BrowserRouter>
@@ -23,7 +24,11 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/forgot-password" component={ForgotPassword} />
-          <Route path="/movie-details" component={MovieDetails} />
+          {/* <Route path="/details" component={MovieDetails} /> */}
+          <Route
+            path="/details/:mediaType/:id"
+            component={() => <MovieDetails page="details/:mediaType/:id" />}
+          />
         </Switch>
       </BrowserRouter>
     </div>

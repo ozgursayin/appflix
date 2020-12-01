@@ -75,6 +75,9 @@ body {
 .content:hover .contentOverlay {
   opacity: 1;
 }
+/* .contentOverlay:hover {
+  cursor: default;
+} */
 
 .contentImage {
   width: 100%;
@@ -159,6 +162,7 @@ body {
 .searchBox {
   text-align: center;
   margin: 1rem auto;
+  margin-bottom: -4rem;
 }
 
 .searchBox input {
@@ -270,12 +274,12 @@ a:hover {
 }
 
 /* toolTip container */
-.toolTip {
-  /* position: relative; */
-  /* display: inline-block; */
-  /* border-bottom: 1px dotted rgb(52, 52, 52); */
-  /* If you want dots under the hoverable text */
-}
+/* .toolTip { */
+/* position: relative; */
+/* display: inline-block; */
+/* border-bottom: 1px dotted rgb(52, 52, 52); */
+/* If you want dots under the hoverable text */
+/* } */
 
 /* toolTip text */
 .toolTip .toolTipText {
