@@ -39,18 +39,15 @@ const MovieDetails = ({ page }) => {
   const seasons = movieDetails.number_of_seasons;
   const episodes = movieDetails.number_of_episodes;
   const lifetime = runtime || episodes;
-  const isMinute = runtime ? " minutes" : " episodes";
+  const minuteOrEpisode = runtime ? " minutes" : " episodes";
   const duration =
     (runtime &&
       `${Math.floor(runtime / 60)} hour(s) ${runtime % 60} minutes`) ||
     `${seasons} seasons`;
 
-  let genres = "";
-  for (let i in movieDetails.genres) {
-    ~~i === ~~movieDetails.genres.length - 1
-      ? (genres += `${movieDetails.genres[i].name} `)
-      : (genres += `${movieDetails.genres[i].name}, `);
-  }
+  const genres =
+    movieDetails.genres &&
+    movieDetails.genres.map((genre) => genre.name).join(", ");
 
   const releaseDate = movieDetails.release_date || movieDetails.first_air_date;
   const releaseYear =
@@ -60,30 +57,23 @@ const MovieDetails = ({ page }) => {
 
   const tagLine = movieDetails.tagline;
   const synopsis = movieDetails.overview;
-
-  let companyCredits = "";
-  for (let i in movieDetails.production_companies) {
-    ~~i === ~~movieDetails.production_companies.length - 1
-      ? (companyCredits += `${movieDetails.production_companies[i].name} `)
-      : (companyCredits += `${movieDetails.production_companies[i].name}, `);
-  }
-
-  let countries = "";
-  for (let i in movieDetails.production_countries) {
-    ~~i === ~~movieDetails.production_countries.length - 1
-      ? (countries += `${movieDetails.production_countries[i].name} `)
-      : (countries += `${movieDetails.production_countries[i].name}, `);
-  }
   const budget = parseInt(movieDetails.budget).toLocaleString();
   const revenue = parseInt(movieDetails.revenue).toLocaleString();
   const rating = `${movieDetails.vote_average}/10`;
   const voteCount = movieDetails.vote_count;
-  let netWorks = "";
-  for (let i in movieDetails.networks) {
-    ~~i === ~~movieDetails.networks.length - 1
-      ? (netWorks += `${movieDetails.networks[i].name} `)
-      : (netWorks += `${movieDetails.networks[i].name}, `);
-  }
+
+  const companyCredits =
+    movieDetails.production_companies &&
+    movieDetails.production_companies.map((company) => company.name).join(", ");
+
+  const countries =
+    movieDetails.production_countries &&
+    movieDetails.production_countries.map((country) => country.name).join(", ");
+
+  const networks =
+    movieDetails.networks &&
+    movieDetails.networks.map((network) => network.name).join(", ");
+
   return (
     <div>
       <div id={styles.container}>
@@ -136,7 +126,7 @@ const MovieDetails = ({ page }) => {
                   ) : (
                     <div>
                       <h2>Networks</h2>
-                      <div id={styles.budget}>{netWorks}</div>
+                      <div id={styles.budget}>{networks}</div>
                     </div>
                   )}
                 </div>
@@ -157,7 +147,7 @@ const MovieDetails = ({ page }) => {
                     <div>
                       <div id={styles.runtime}>
                         {lifetime}
-                        {isMinute}
+                        {minuteOrEpisode}
                       </div>
                     </div>
                   </div>

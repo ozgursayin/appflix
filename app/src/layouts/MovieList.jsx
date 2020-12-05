@@ -24,15 +24,6 @@ const MovieList = (props) => {
     setResult(resultMovies);
   };
 
-  // const fetchPopularMovies = async () => {
-  //   const apiCallURL = `${BASE_URL}${api_key}${query}`;
-  //   const popularMoviesCall = ` https://api.themoviedb.org/3/movie/popular${api_key}&language=en-US&page=1`;
-  //   const result = await fetch(popularMoviesCall);
-  //   const resultMovies = await result.json();
-  //   setResult(resultMovies);
-  //   console.log(resultMovies)
-  // };
-
   function usePersistedState(key, defaultValue) {
     const [state, setState] = React.useState(
       () => localStorage.getItem(key) || defaultValue
@@ -45,6 +36,10 @@ const MovieList = (props) => {
   }
   usePersistedState(previousQuery.current, previousQuery.current);
   console.log(localStorage.key(0));
+
+  useEffect(() => {
+    fetchMovies();
+  }, []);
 
   useEffect(() => {
     fetchMovies();

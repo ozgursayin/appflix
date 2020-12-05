@@ -11,7 +11,7 @@ const MovieSearch = (props) => {
           movie.poster_path && (
             <MovieCard
               movie={movie}
-              title={movie.original_title}
+              title={movie.original_title || movie.name}
               description={movie.overview}
               poster_path={movie.poster_path}
               media_type={movie.media_type}

@@ -1,16 +1,29 @@
 import React from "react";
 import styles from "../ui/main.module.css";
 import { Link } from "react-router-dom";
+import firebase, { firestore } from "../firebase";
+import { useAuth } from "../contexts/AuthContext";
 
 const MovieCard = (props) => {
   const { title, description, poster_path, id, media_type } = props;
-
+  const { currentUser } = useAuth();
   const imageBaseURL = "https://image.tmdb.org/t/p/original/";
 
   const toPageInfo = {
     pathname: `/details/${media_type}/${id}`,
     state: { ...props.movie },
   };
+
+  const addToFavorites = () => {
+    const favoritesDatabaseRef = firestore.ref(`Favorites`);
+    const favoriteMovie = {
+      ...props.movie,
+      email: currentUser.email,
+      isFavorite: true,
+    };
+    favoritesDatabaseRef.push(favoriteMovie);
+  };
+
   return (
     <>
       <div className={styles.page}>
@@ -32,7 +45,7 @@ const MovieCard = (props) => {
               </Link>
               <div
                 className={`${styles.toolTip} ${styles.likeButton}`}
-                onClick={() => console.log("Liked")}
+                onClick={addToFavorites}
               >
                 ❤<span className={styles.toolTipText}>Add to Favorites</span>
               </div>

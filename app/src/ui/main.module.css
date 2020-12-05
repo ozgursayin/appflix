@@ -301,3 +301,21 @@ a:hover {
   visibility: visible;
   margin-left: 0.5rem;
 }
+.logout {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: inherit;
+  cursor: pointer;
+  padding: 0.65rem 2rem;
+  border: none;
+  outline: none;
+  border-radius: 2rem;
+  text-align: center;
+  color: #ffffff;
+  background: #31819e;
+}
+
+.guestName {
+  margin: 1rem;
+}
