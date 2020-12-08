@@ -8,7 +8,7 @@ import MovieList from "./layouts/MovieList";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-  localStorage.clear();
+  localStorage.removeItem("query");
 
   return (
     <BrowserRouter>

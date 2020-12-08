@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styles from "../ui/login.module.css";
 import { useAuth } from "../contexts/AuthContext";
+import Spinner from "./spinner.svg";
 
 const Signup = () => {
   const emailRef = useRef();
@@ -42,6 +43,14 @@ const Signup = () => {
     }
     setLoading(false);
   };
+
+  if (loading) {
+    return (
+      <div className={styles.loading}>
+        <img src={Spinner} alt="Loading..." />
+      </div>
+    );
+  }
 
   return (
     <div>

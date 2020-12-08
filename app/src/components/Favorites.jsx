@@ -1,33 +1,45 @@
 import React, { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
-import { firestore } from "../firebase";
+import { firestoreDB } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 
 const Favorites = (props) => {
-  const [movies, setMovies] = useState([]);
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
   const { currentUser } = useAuth();
 
-  useEffect(() => {
-    const favoriteMoviesRef = firestore.ref("Favorites");
-    favoriteMoviesRef.on("value", (snapshot) => {
-      setMovies(snapshot.val());
+  const getFavoriteMovies = () => {
+    const favoriteMoviesFirestoreRef = firestoreDB.collection("Favorites");
+    favoriteMoviesFirestoreRef.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push({ dbid: doc.id }, ...[doc.data()]);
+      });
+      setFavoriteMovies(items);
     });
+  };
+
+  useEffect(() => {
+    getFavoriteMovies();
   }, []);
 
   const filteredFavoriteMovies =
-    movies &&
-    Object.values(movies).filter((movie) => movie.email === currentUser.email);
-  console.log(filteredFavoriteMovies);
+    favoriteMovies &&
+    Object.values(favoriteMovies).filter(
+      (favoriteMovie) => favoriteMovie.uid === currentUser.uid
+    );
 
   return (
     <div>
       {filteredFavoriteMovies &&
         filteredFavoriteMovies.map((movie) => (
           <MovieCard
-            title={movie.original_title}
+            title={movie.original_title || movie.name}
             description={movie.overview}
             poster_path={movie.poster_path}
             key={movie.id}
+            movie={movie}
+            media_type={movie.media_type}
+            id={movie.id}
           />
         ))}
     </div>

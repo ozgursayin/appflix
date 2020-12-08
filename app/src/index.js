@@ -5,11 +5,11 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <AuthProvider>
-    <React.StrictMode>
+  <React.StrictMode>
+    <AuthProvider>
       <App />
-    </React.StrictMode>
-  </AuthProvider>,
+    </AuthProvider>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

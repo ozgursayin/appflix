@@ -15,17 +15,27 @@ const Navbar = () => {
       history.push("/login");
     } catch (err) {
       setError(err);
+      console.log(error);
     }
   };
   return (
-    <div>
-      <div className={styles.guestName}>
-        {!currentUser.isAnonymous ? (
-          `User: ${currentUser.email}`
-        ) : (
-          <Link to="/signup">Hello Guest, upgrade to save your profile</Link>
-        )}
+    <div className={styles.navBar}>
+      <div className={styles.navBarTop}>
+        <div className={styles.username}>
+          <strong>{currentUser.email}</strong>
+        </div>
+        <Link
+          className={styles.logout}
+          role="button"
+          type="submit"
+          to="/"
+          onClick={handleLogout}
+          hidden={currentUser.isAnonymous}
+        >
+          Log Out
+        </Link>
       </div>
+
       <div className={styles.tabs}>
         <NavLink to="/" exact activeClassName={styles.active}>
           Search Movies
@@ -37,19 +47,7 @@ const Navbar = () => {
           My Watch List
         </NavLink>
         <span>
-          <div>
-            <Link
-              className={styles.logout}
-              role="button"
-              type="submit"
-              to="/"
-              onClick={handleLogout}
-              hidden={currentUser.isAnonymous}
-            >
-              Log Out
-            </Link>
-            {/* <div>{currentUser}</div> */}
-          </div>
+          <div>{/* <div>{currentUser}</div> */}</div>
         </span>
       </div>
     </div>

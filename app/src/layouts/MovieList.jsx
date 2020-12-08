@@ -10,7 +10,7 @@ const MovieList = (props) => {
   const { page } = props;
   const [result, setResult] = useState([]);
   const [searchedMovie, setSearchedMovie] = useState(
-    localStorage.key(0) || ["back-to"]
+    localStorage.getItem("query") || ["back-to"]
   );
   const previousQuery = useRef("");
   const BASE_URL = "https://api.themoviedb.org/3/search/multi";
@@ -24,22 +24,14 @@ const MovieList = (props) => {
     setResult(resultMovies);
   };
 
-  function usePersistedState(key, defaultValue) {
-    const [state, setState] = React.useState(
-      () => localStorage.getItem(key) || defaultValue
-    );
-    useEffect(() => {
-      if (localStorage.length === 0) localStorage.setItem(key, state);
-    }, [key, state]);
-
-    return [state, setState];
-  }
-  usePersistedState(previousQuery.current, previousQuery.current);
-  console.log(localStorage.key(0));
-
   useEffect(() => {
     fetchMovies();
   }, []);
+
+  useEffect(() => {
+    if (previousQuery.current !== "")
+      localStorage.setItem("query", previousQuery.current);
+  });
 
   useEffect(() => {
     fetchMovies();
@@ -65,8 +57,7 @@ const MovieList = (props) => {
     previousQuery.current = e.target.value;
     e.target.value.length > 0
       ? setSearchedMovie(e.target.value)
-      : setSearchedMovie(null);
-    localStorage.clear();
+      : setSearchedMovie(localStorage.getItem("query"));
   };
 
   return (

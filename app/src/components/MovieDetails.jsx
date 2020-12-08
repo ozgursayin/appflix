@@ -4,17 +4,14 @@ import { useLocation } from "react-router-dom";
 
 const MovieDetails = ({ page }) => {
   const location = useLocation();
-  console.log(page);
   const movie = location.state;
   const api_key = `?api_key=${process.env.REACT_APP_TMDB_API_KEY}`;
 
   const movieID = movie.id;
   const mediaType = `${movie.media_type}/`;
-  console.log(mediaType);
   const append = "&append_to_response=videos";
   const MovieDataBaseURL = `https://api.themoviedb.org/3/`;
   const queryURL = `${MovieDataBaseURL}${mediaType}${movieID}${api_key}${append}`;
-  console.log(queryURL);
 
   const [movieDetails, setMovieDetails] = useState("");
 
@@ -28,7 +25,6 @@ const MovieDetails = ({ page }) => {
   useEffect(() => {
     fetchMovies();
   }, []);
-  console.log(movieDetails);
 
   const imageBaseURL = "https://image.tmdb.org/t/p/original/";
   const posterPath = movieDetails.poster_path;
