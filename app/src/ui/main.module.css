@@ -305,15 +305,6 @@ a:hover {
   transform: scale(1.1);
 }
 
-/* toolTip container */
-/* .toolTip { */
-/* position: relative; */
-/* display: inline-block; */
-/* border-bottom: 1px dotted rgb(52, 52, 52); */
-/* If you want dots under the hoverable text */
-/* } */
-
-/* toolTip text */
 .toolTip .toolTipText {
   visibility: hidden;
   width: 8rem;
@@ -323,30 +314,46 @@ a:hover {
   padding: 5px 0;
   border-radius: 6px;
   font-size: 1rem;
-  /* Position the toolTip text - see examples below! */
   position: absolute;
   z-index: 1;
 }
 
-/* Show the toolTip text when you mouse over the toolTip container */
 .toolTip:hover .toolTipText {
   visibility: visible;
   margin-left: 0.5rem;
 }
+
+.username {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: inherit;
+  padding: 0.8rem 2rem;
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+  border: none;
+  outline: none;
+  text-align: center;
+  color: #ffffff;
+  background: #dd6f67;
+  border-radius: 0.5rem;
+}
+
 .logout {
   font-family: inherit;
   font-size: 0.95rem;
   font-weight: 500;
   line-height: inherit;
   cursor: pointer;
-  padding: 0.65rem 2rem;
-  border: none;
+  padding: 0.8rem 2rem;
+  margin-bottom: 1rem;
   margin-left: 2rem;
+  border: none;
   outline: none;
-  border-radius: 2rem;
   text-align: center;
   color: #ffffff;
   background: #ee5b50;
+  border-radius: 2rem;
 }
 
 .navBarTop {
@@ -362,17 +369,25 @@ div[disabled] {
   opacity: 0.7;
 }
 
-.username {
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 500;
-  line-height: inherit;
-  padding: 0.65rem 2rem;
-  border: none;
-  margin-left: 2rem;
-  outline: none;
+.emptyPage {
+  margin-top: 15%;
   text-align: center;
-  color: #ffffff;
-  background: #ee5b50;
-  border-radius: 0.5rem;
+}
+
+.loading {
+  width: 10rem;
+  display: flex;
+  min-height: 100vh;
+  margin-left: 40%;
+  justify-content: center;
+}
+
+.message {
+  top: 0;
+}
+.icon {
+  width: 4rem;
+  /* display: flex; */
+
+  /* justify-content: center; */
 }

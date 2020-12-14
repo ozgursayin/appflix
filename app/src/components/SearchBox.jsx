@@ -4,25 +4,8 @@ import styles from "../ui/main.module.css";
 const SearchBox = (props) => {
   const { page, movieNameSetter } = props;
 
-  // const searchBoxPlaceholderSetter = (page) => {
-  //   switch (page) {
-  //     case "search":
-  //       return "Search movies...";
-
-  //     case "watchlist":
-  //       return "Search movies on watchlist...";
-
-  //     case "favorites": {
-  //       return "Search favorite movies...";
-  //     }
-  //     default:
-  //       return null;
-  //   }
-  // };
-
-  // const placeholder = searchBoxPlaceholderSetter(page);
   if (page !== "search") {
-    return <div> </div>;
+    return <div className={styles.searchBox}> </div>;
   }
 
   return (
@@ -31,7 +14,7 @@ const SearchBox = (props) => {
         <input
           type="search"
           placeholder="Search movies..."
-          onChange={(e) => movieNameSetter(e)}
+          onChange={movieNameSetter}
         />
       </div>
     </div>

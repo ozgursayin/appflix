@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styles from "../ui/login.module.css";
 import { useAuth } from "../contexts/AuthContext";
-import Spinner from "./spinner.svg";
+import Spinner from "../assets/spinner.svg";
 
 const Login = () => {
   const { login } = useAuth();
@@ -90,26 +90,6 @@ const Login = () => {
                 </Link>
               </div>
             </form>
-            <div className={styles.line}>
-              <span className={styles.lineBar}></span>
-              <span className={styles.lineText}>Or</span>
-              <span className={styles.lineBar}></span>
-            </div>
-            <div className={styles.method}>
-              <div className={styles.methodItem}>
-                <Link
-                  className={styles.buttonAction}
-                  role="button"
-                  to="/"
-                  //onClick={this.handleClick()}
-                >
-                  <i
-                    className={`${styles.icons} ${styles.iconsGoogle} ${styles.fab}`}
-                  ></i>
-                  <span>Login with Google</span>
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </main>

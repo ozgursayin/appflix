@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
+import styles from "../ui/main.module.css";
 import MovieCard from "./MovieCard";
-import { firestoreDB } from "../firebase";
-import { useAuth } from "../contexts/AuthContext";
+import DatabaseRefs from "./DatabaseRefs";
 
-const Favorites = (props) => {
+const Favorites = () => {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
-  const { currentUser } = useAuth();
+  const [loading, setLoading] = useState(true);
+
+  const favoriteMoviesFirestoreRef = DatabaseRefs().favoriteMoviesFirestoreRef;
 
   const getFavoriteMovies = () => {
-    const favoriteMoviesFirestoreRef = firestoreDB.collection("Favorites");
     favoriteMoviesFirestoreRef.onSnapshot((querySnapshot) => {
       const items = [];
       querySnapshot.forEach((doc) => {
-        items.push({ dbid: doc.id }, ...[doc.data()]);
+        items.push(doc.data());
       });
+
       setFavoriteMovies(items);
+      setLoading(false);
     });
   };
 
@@ -22,16 +25,18 @@ const Favorites = (props) => {
     getFavoriteMovies();
   }, []);
 
-  const filteredFavoriteMovies =
-    favoriteMovies &&
-    Object.values(favoriteMovies).filter(
-      (favoriteMovie) => favoriteMovie.uid === currentUser.uid
+  if (favoriteMovies.length <= 0 && !loading) {
+    return (
+      <div className={styles.emptyPage}>
+        <h1>Start adding your Favorite movies here</h1>
+      </div>
     );
+  }
 
   return (
     <div>
-      {filteredFavoriteMovies &&
-        filteredFavoriteMovies.map((movie) => (
+      {favoriteMovies &&
+        favoriteMovies.map((movie) => (
           <MovieCard
             title={movie.original_title || movie.name}
             description={movie.overview}

@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
+import styles from "../ui/main.module.css";
 import MovieCard from "./MovieCard";
-import { firestoreDB } from "../firebase";
-import { useAuth } from "../contexts/AuthContext";
+import DatabaseRefs from "./DatabaseRefs";
 
-const Watchlist = (props) => {
+const Watchlist = () => {
   const [watchListMovies, setWatchListMovies] = useState([]);
-  const { currentUser } = useAuth();
+  const [loading, setLoading] = useState(true);
+
+  const watchListMoviesFirestoreRef = DatabaseRefs()
+    .watchListMoviesFirestoreRef;
 
   const getWatchListMovies = () => {
-    const favoriteMoviesFirestoreRef = firestoreDB.collection("WatchList");
-    favoriteMoviesFirestoreRef.onSnapshot((querySnapshot) => {
+    watchListMoviesFirestoreRef.onSnapshot((querySnapshot) => {
       const items = [];
       querySnapshot.forEach((doc) => {
         items.push(doc.data());
       });
       setWatchListMovies(items);
+      setLoading(false);
     });
   };
 
@@ -22,16 +25,18 @@ const Watchlist = (props) => {
     getWatchListMovies();
   }, []);
 
-  const filteredWatchListMovies =
-    watchListMovies &&
-    Object.values(watchListMovies).filter(
-      (watchListMovie) => watchListMovie.uid === currentUser.uid
+  if (watchListMovies.length <= 0 && !loading) {
+    return (
+      <div className={styles.emptyPage}>
+        <h1>Start adding your Watchlist movies here</h1>
+      </div>
     );
+  }
 
   return (
     <div>
-      {filteredWatchListMovies &&
-        filteredWatchListMovies.map((movie) => (
+      {watchListMovies &&
+        watchListMovies.map((movie) => (
           <MovieCard
             title={movie.original_title || movie.name}
             description={movie.overview}

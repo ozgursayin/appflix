@@ -2,14 +2,14 @@ import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styles from "../ui/login.module.css";
 import { useAuth } from "../contexts/AuthContext";
-import Spinner from "./spinner.svg";
+import Spinner from "../assets/spinner.svg";
 
 const Signup = () => {
   const emailRef = useRef();
   const usernameRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { signup, loginGuest } = useAuth();
+  const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -24,19 +24,6 @@ const Signup = () => {
       setError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
-      history.push("/");
-    } catch (err) {
-      setError(err.message);
-    }
-    setLoading(false);
-  };
-
-  const handleGuestSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setError("");
-      setLoading(true);
-      await loginGuest();
       history.push("/");
     } catch (err) {
       setError(err.message);
@@ -67,11 +54,7 @@ const Signup = () => {
               <p className={`${styles.title} ${styles.titleSubs}`}>
                 Existing user?
                 <span>
-                  <Link
-                    className={styles.linkText}
-                    to="/login"
-                    //onClick={this.handleClick()}
-                  >
+                  <Link className={styles.linkText} to="/login">
                     <span> </span> Log in
                   </Link>
                 </span>
@@ -119,16 +102,6 @@ const Signup = () => {
                 />
               </div>
               <div className={styles.formGroup}>
-                <Link
-                  className={styles.linkText}
-                  //className={styles.inputSubmit}
-                  role="button"
-                  type="submit"
-                  to="/"
-                  onClick={handleGuestSubmit}
-                >
-                  <span> </span> Continue as Guest
-                </Link>
                 <span> </span>
                 <Link
                   disabled={loading}
@@ -142,25 +115,6 @@ const Signup = () => {
                 </Link>
               </div>
             </form>
-            <div className={styles.line}>
-              <span className={styles.lineBar}></span>
-              <span className={styles.lineText}>Or</span>
-              <span className={styles.lineBar}></span>
-            </div>
-            <div className={styles.method}>
-              <div className={styles.methodItem}>
-                <Link
-                  className={styles.buttonAction}
-                  to="/"
-                  //onClick={this.handleClick()}
-                >
-                  <i
-                    className={`${styles.icons} ${styles.iconsGoogle} ${styles.fab}`}
-                  ></i>
-                  <span>Sign up with Google</span>
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </main>

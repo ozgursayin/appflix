@@ -2,33 +2,29 @@ import React, { useState, useEffect } from "react";
 import styles from "../ui/details.module.css";
 import { useLocation } from "react-router-dom";
 
-const MovieDetails = ({ page }) => {
+const MovieDetails = () => {
   const location = useLocation();
   const movie = location.state;
-  const api_key = `?api_key=${process.env.REACT_APP_TMDB_API_KEY}`;
-
+  const api_key = process.env.REACT_APP_TMDB_API_KEY;
   const movieID = movie.id;
-  const mediaType = `${movie.media_type}/`;
-  const append = "&append_to_response=videos";
-  const MovieDataBaseURL = `https://api.themoviedb.org/3/`;
-  const queryURL = `${MovieDataBaseURL}${mediaType}${movieID}${api_key}${append}`;
-
+  const mediaType = movie.media_type;
+  const MovieDataBaseURL = `https://api.themoviedb.org/3`;
+  const queryURL = `${MovieDataBaseURL}/${mediaType}/${movieID}?api_key=${api_key}`;
   const [movieDetails, setMovieDetails] = useState("");
-
-  const fetchMovies = async () => {
-    const apiCallURL = queryURL;
-    const result = await fetch(apiCallURL);
+  
+  const fetchMovieDetails = async () => {
+    const result = await fetch(queryURL);
     const resultMovies = await result.json();
     setMovieDetails(resultMovies);
   };
 
   useEffect(() => {
-    fetchMovies();
+    fetchMovieDetails();
   }, []);
 
-  const imageBaseURL = "https://image.tmdb.org/t/p/original/";
+  const imageBaseURL = "https://image.tmdb.org/t/p/original";
   const posterPath = movieDetails.poster_path;
-  const movieImage = `${imageBaseURL}${posterPath}`;
+  const movieImage = `${imageBaseURL}/${posterPath}`;
   const movieTitle = movieDetails.original_title || movieDetails.original_name;
   const status = movieDetails.status;
   const runtime = movieDetails.runtime;

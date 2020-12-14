@@ -1,35 +1,38 @@
 import React, { useState, useEffect } from "react";
 import styles from "../ui/main.module.css";
 import { Link } from "react-router-dom";
-import {  firestoreDB } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
+import DatabaseRefs from "./DatabaseRefs";
 
 const MovieCard = (props) => {
   const { title, description, poster_path, id, media_type } = props;
   const { currentUser } = useAuth();
-  const imageBaseURL = "https://image.tmdb.org/t/p/original/";
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
-  const [watchListMovies, setWatchListMovies] = useState([]);
+  const imageBaseURL = "https://image.tmdb.org/t/p/original";
+  const [filteredFavoriteMovieIds, setFilteredFavoriteMovieIds] = useState([]);
+  const [filteredWatchListMovieIds, setFilteredWatchListMovieIds] = useState(
+    []
+  );
+  const watchListMoviesFirestoreRef = DatabaseRefs()
+    .watchListMoviesFirestoreRef;
+  const favoriteMoviesFirestoreRef = DatabaseRefs().favoriteMoviesFirestoreRef;
 
   const getFavoriteMovies = () => {
-    const favoriteMoviesFirestoreRef = firestoreDB.collection("Favorites");
     favoriteMoviesFirestoreRef.onSnapshot((querySnapshot) => {
-      const items = [];
+      const favoriteMovieIds = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data());
+        favoriteMovieIds.push(doc.data().id);
       });
-      setFavoriteMovies(items);
+      setFilteredFavoriteMovieIds(favoriteMovieIds);
     });
   };
 
   const getWatchListMovies = () => {
-    const favoriteMoviesFirestoreRef = firestoreDB.collection("WatchList");
-    favoriteMoviesFirestoreRef.onSnapshot((querySnapshot) => {
-      const items = [];
+    watchListMoviesFirestoreRef.onSnapshot((querySnapshot) => {
+      const watchListMovieIds = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data());
+        watchListMovieIds.push(doc.data().id);
       });
-      setWatchListMovies(items);
+      setFilteredWatchListMovieIds(watchListMovieIds);
     });
   };
 
@@ -38,84 +41,108 @@ const MovieCard = (props) => {
     getWatchListMovies();
   }, []);
 
-  const filteredFavoriteMovieIds =
-    favoriteMovies &&
-    Object.values(favoriteMovies)
-      .filter((favoriteMovie) => favoriteMovie.uid === currentUser.uid)
-      .map((favoriteMovie) => favoriteMovie.id);
-
-  const filteredWatchListMovieIds =
-    watchListMovies &&
-    Object.values(watchListMovies)
-      .filter((watchListMovie) => watchListMovie.uid === currentUser.uid)
-      .map((watchListMovie) => watchListMovie.id);
-
   const addToFavorites = () => {
-    firestoreDB
-      .collection("Favorites")
-      .doc()
-      .set({
+    favoriteMoviesFirestoreRef
+      .add({
         ...props.movie,
         uid: currentUser.uid,
         email: currentUser.email,
+      })
+      .then(() => {
+        console.log(
+          `"${
+            props.movie.name || props.movie.title
+          }" successfully added to Favorites`
+        );
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
       });
   };
 
   const addToWatchList = () => {
-    firestoreDB
-      .collection("WatchList")
-      .doc()
-      .set({
+    watchListMoviesFirestoreRef
+      .add({
         ...props.movie,
         uid: currentUser.uid,
         email: currentUser.email,
+      })
+      .then(() => {
+        console.log(
+          `"${
+            props.movie.name || props.movie.title
+          }" successfully added to Watch List`
+        );
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
       });
   };
 
   const removefromFavorites = (id) => {
     const filteredFavoriteMovieKeyID = [];
-    const favoriteMoviesFirestoreRef = firestoreDB.collection("Favorites");
-    favoriteMoviesFirestoreRef.onSnapshot((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        filteredFavoriteMovieKeyID.push([
-          doc.id,
-          doc.data().id,
-          doc.data().uid,
-        ]);
-      });
-      const movieKeyIdPair = filteredFavoriteMovieKeyID.filter(
-        (f) => f[1] === id && f[2] === currentUser.uid
-      );
-      const keyIdToDelete = movieKeyIdPair[0];
-      const keyToDelete = keyIdToDelete[0];
-      const favoriteMovieToDelete = firestoreDB
-        .collection("Favorites")
-        .doc(keyToDelete);
-      favoriteMovieToDelete.delete();
-    });
+    const unsubscribe = favoriteMoviesFirestoreRef.onSnapshot(
+      (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if (doc.data().id === id)
+            filteredFavoriteMovieKeyID.push([
+              doc.id,
+              doc.data().name || doc.data().title,
+              doc.data().id,
+              doc.data().uid,
+            ]);
+        });
+
+        const keyIdToDelete = filteredFavoriteMovieKeyID[0];
+        const keyToDelete = keyIdToDelete[0];
+        favoriteMoviesFirestoreRef
+          .doc(keyToDelete)
+          .delete()
+          .then(() => {
+            console.log(
+              `"${keyIdToDelete[1]}" successfully deleted from Favorites!`
+            );
+          })
+          .catch((error) => {
+            console.error("Error removing document: ", error);
+          });
+        unsubscribe();
+      }
+    );
   };
 
   const removefromWatchList = (id) => {
     const filteredWatchListMovieKeyID = [];
-    const watchListMoviesFirestoreRef = firestoreDB.collection("WatchList");
-    watchListMoviesFirestoreRef.onSnapshot((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        filteredWatchListMovieKeyID.push([
-          doc.id,
-          doc.data().id,
-          doc.data().uid,
-        ]);
-      });
-      const movieKeyIdPair = filteredWatchListMovieKeyID.filter(
-        (f) => f[1] === id && f[2] === currentUser.uid
-      );
-      const keyIdToDelete = movieKeyIdPair[0];
-      const keyToDelete = keyIdToDelete[0];
-      const watchListMovieToDelete = firestoreDB
-        .collection("WatchList")
-        .doc(keyToDelete);
-      watchListMovieToDelete.delete();
-    });
+    const unsubscribe = watchListMoviesFirestoreRef.onSnapshot(
+      (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if (doc.data().id === id)
+            filteredWatchListMovieKeyID.push([
+              doc.id,
+              doc.data().name || doc.data().title,
+              doc.data().id,
+              doc.data().uid,
+            ]);
+        });
+        const keyIdToDelete = filteredWatchListMovieKeyID[0];
+        const keyToDelete = keyIdToDelete[0];
+
+        if (keyToDelete) {
+          watchListMoviesFirestoreRef
+            .doc(keyToDelete)
+            .delete()
+            .then(() => {
+              console.log(
+                `"${keyIdToDelete[1]}" successfully deleted from Watch List!`
+              );
+            })
+            .catch((error) => {
+              console.error("Error removing document: ", error);
+            });
+          unsubscribe();
+        }
+      }
+    );
   };
 
   const toPageInfo = {
@@ -131,9 +158,10 @@ const MovieCard = (props) => {
             <Link to={toPageInfo}>
               <div className={styles.contentOverlay}></div>
             </Link>
+
             <img
               className={styles.contentImage}
-              src={`${imageBaseURL}${poster_path}`}
+              src={`${imageBaseURL}/${poster_path}`}
               alt="Poster"
             />
 
@@ -142,6 +170,7 @@ const MovieCard = (props) => {
                 <h3>{title}</h3>
                 <p>{description}</p>
               </Link>
+
               <div
                 className={`${styles.toolTip} ${styles.likeButton}`}
                 onClick={addToFavorites}
@@ -168,8 +197,6 @@ const MovieCard = (props) => {
 
               <div
                 className={`${styles.toolTip} ${styles.addButton}`}
-                // onClick={addToWatchList}
-
                 onClick={addToWatchList}
                 hidden={
                   filteredWatchListMovieIds &&
@@ -192,8 +219,6 @@ const MovieCard = (props) => {
                 </span>
               </div>
             </div>
-
-            {/* </a> */}
           </div>
         </div>
       </div>

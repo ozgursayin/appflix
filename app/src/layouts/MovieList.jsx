@@ -4,23 +4,26 @@ import Navbar from "../components/Navbar";
 import MovieSearch from "../components/MovieSearch";
 import WatchList from "../components/Watchlist";
 import Favorites from "../components/Favorites";
-import movies from "../movies";
 
 const MovieList = (props) => {
   const { page } = props;
   const [result, setResult] = useState([]);
   const [searchedMovie, setSearchedMovie] = useState(
-    localStorage.getItem("query") || ["back-to"]
+    localStorage.getItem("query")
   );
   const previousQuery = useRef("");
   const BASE_URL = "https://api.themoviedb.org/3/search/multi";
-  const api_key = `?api_key=${process.env.REACT_APP_TMDB_API_KEY}`;
-  const query = `&query=${searchedMovie}`;
+  const TRENDING_URL = "https://api.themoviedb.org/3/trending/all/day";
+  const api_key = process.env.REACT_APP_TMDB_API_KEY;
+  const query = searchedMovie;
 
   const fetchMovies = async () => {
-    const apiCallURL = `${BASE_URL}${api_key}${query}`;
-    const result = await fetch(apiCallURL);
-    const resultMovies = await result.json();
+    let apiCallURL = "";
+    previousQuery.current !== ""
+      ? (apiCallURL = `${BASE_URL}?api_key=${api_key}&query=${query}`)
+      : (apiCallURL = `${TRENDING_URL}?api_key=${api_key}`);
+    const apiCallResult = await fetch(apiCallURL);
+    const resultMovies = await apiCallResult.json();
     setResult(resultMovies);
   };
 
@@ -37,17 +40,14 @@ const MovieList = (props) => {
     fetchMovies();
   }, [searchedMovie]);
 
-  const pageCases = (page) => {
+  const checkPageCases = (page) => {
     switch (page) {
       case "search":
         return <MovieSearch movies={result} />;
-
       case "watchlist":
-        return <WatchList movies={movies} />;
-
-      case "favorites": {
-        return <Favorites movies={movies} />;
-      }
+        return <WatchList movies={result} />;
+      case "favorites":
+        return <Favorites movies={result} />;
       default:
         return null;
     }
@@ -55,16 +55,14 @@ const MovieList = (props) => {
 
   const movieNameSetter = (e) => {
     previousQuery.current = e.target.value;
-    e.target.value.length > 0
-      ? setSearchedMovie(e.target.value)
-      : setSearchedMovie(localStorage.getItem("query"));
+    setSearchedMovie(e.target.value);
   };
 
   return (
     <div>
       <Navbar />
-      <SearchBox page={page} movieNameSetter={(e) => movieNameSetter(e)} />
-      {pageCases(page)}
+      <SearchBox page={page} movieNameSetter={movieNameSetter} />
+      {checkPageCases(page)}
     </div>
   );
 };

@@ -1,8 +1,38 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../ui/login.module.css";
+import { useAuth } from "../contexts/AuthContext";
+import Spinner from "../assets/spinner.svg";
 
 const ForgotPassword = () => {
+  const { resetPassword } = useAuth();
+  const emailRef = useRef();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setMessage("");
+      setError("");
+      setLoading(true);
+      await resetPassword(emailRef.current.value);
+      setMessage("Check your inbox for further instructions");
+    } catch (err) {
+      setError(err.message);
+    }
+    setLoading(false);
+  };
+
+  if (loading) {
+    return (
+      <div className={styles.loading}>
+        <img src={Spinner} alt="Loading..." />
+      </div>
+    );
+  }
+
   return (
     <div>
       <main className={styles.main}>
@@ -12,6 +42,12 @@ const ForgotPassword = () => {
               <h1 className={`${styles.title} ${styles.titleLarge}`}>
                 Recover Password
               </h1>
+              <div hidden={!error} className={styles.errorMessage}>
+                {error}
+              </div>
+              <div hidden={!message} className={styles.successMessage}>
+                {message}
+              </div>
             </div>
             <form className={styles.form}>
               <div className={styles.formGroup}>
@@ -19,34 +55,24 @@ const ForgotPassword = () => {
                   type="email"
                   name="email"
                   id="email"
+                  ref={emailRef}
                   className={styles.inputField}
                   placeholder="Email address"
                 />
               </div>
 
               <div className={styles.formGroup}>
-                <Link
-                  className={styles.linkText}
-                  role="button"
-                  to="/login"
-                  //onClick={this.handleClick()}
-                >
+                <Link className={styles.linkText} role="button" to="/login">
                   Back to Login
                 </Link>
-                {/* <input
-                  type="button"
-                  name="submit"
+
+                <button
                   className={styles.inputSubmit}
-                  value="Reset Password"
-                /> */}
-                <Link
-                  className={styles.inputSubmit}
-                  role="button"
-                  to="/"
-                  //onClick={this.handleClick()}
+                  onClick={handleSubmit}
+                  disabled={message.length}
                 >
                   Reset Password
-                </Link>
+                </button>
               </div>
             </form>
           </div>

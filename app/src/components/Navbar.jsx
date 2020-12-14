@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../ui/main.module.css";
 import { NavLink, Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import Icona from "../assets/icona.png";
 
 const Navbar = () => {
   const [error, setError] = useState("");
@@ -21,6 +22,7 @@ const Navbar = () => {
   return (
     <div className={styles.navBar}>
       <div className={styles.navBarTop}>
+        <img className={styles.icon} src={Icona} alt="" />
         <div className={styles.username}>
           <strong>{currentUser.email}</strong>
         </div>
@@ -46,9 +48,7 @@ const Navbar = () => {
         <NavLink to="/watchlist" activeClassName={styles.active}>
           My Watch List
         </NavLink>
-        <span>
-          <div>{/* <div>{currentUser}</div> */}</div>
-        </span>
+        <span> </span>
       </div>
     </div>
   );
