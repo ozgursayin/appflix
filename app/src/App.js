@@ -1,5 +1,5 @@
 //import "./App.css";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ForgotPassword from "./components/ForgotPassword";
@@ -11,7 +11,7 @@ function App() {
   localStorage.removeItem("query");
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <PrivateRoute
           path="/"
@@ -34,7 +34,7 @@ function App() {
           component={() => <MovieDetails page="details/:mediaType/:id" />}
         />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
